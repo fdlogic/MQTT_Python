@@ -11,7 +11,7 @@ import random
 import time
 
 
-def run(client_id, broker, port, topic, msg):
+def run(client_id, topic, msg):
     """
     This function call to the three functions:
     connecto_mqtt(): define ths MQTT client
@@ -20,27 +20,25 @@ def run(client_id, broker, port, topic, msg):
 
     Arguments:
     client_id: client_id defined
-    broker: defined by the user. Default: broker.emqx.io 
-    port: defined by th user. Default: 1883
     topic: topic for publish
     msg: message to sending
     
     Return: nothing
     """
 
-    client = connect_mqtt(client_id, broker, port)
+    client = connect_mqtt(client_id)
     publish(client, topic, msg)
 
 
-def connect_mqtt(client_id, broker, port):
+def connect_mqtt(client_id):
     """
     Connect the client to the broker, using the port.
 
     Arguments: 
     client_id: id for the client
-    broker: broker for send the message
-    port: port refered to the broker
     """
+    broker = "broker.emqx.io"
+    port = 1883
 
     client = mqtt_client.Client(client_id)
     client.on_connect = on_connect
@@ -81,8 +79,6 @@ def publish(client, topic, msg):
 
 #Data processing
 parser = argparse.ArgumentParser(description='Mqtt connection')
-parser.add_argument('--broker', type=str, default = "broker.emqx.io", help='Select the broker')
-parser.add_argument('--port', type=int, default = 1883, help='Port used by the broker')
 parser.add_argument('--topic', type=str, default = "send_msg", help='Topic for message')
 parser.add_argument('--msg', type=str, default = "hello world", help='Message sending')
 
@@ -94,4 +90,4 @@ if __name__ == '__main__':
     client_id = f'python-mqtt-{random.randint(0, 1000)}'
 
     #Run ths script
-    run(client_id, args.broker, args.port, args.topic, args.msg)
+    run(client_id, args.topic, args.msg)
