@@ -1,5 +1,5 @@
 # Send message with Paho
-Simple python script that send message through MQTT with Paho.
+Simple python scripts that publish and subscribe in topics, through MQTT with Paho.
 
 
 ### Prerequisites 
@@ -10,11 +10,12 @@ pip install -r requirements.txt
 ```
 
 ## Usage
-For see the documentation, execute: python MQTT_communication.py -h
+For __publish__, execute: python send_data.py -h
 
 Usage 
 
 ```
+python send_data.py -h
 usage: send_data.py [-h] [--topic TOPIC] [--msg MSG]
 
 Mqtt connection
@@ -23,10 +24,17 @@ optional arguments:
   -h, --help     show this help message and exit
   --topic TOPIC  Topic for message
   --msg MSG      Message sending
-
 ```
 
-### Example 
+For __subscribe__, execute: python receive_data.py -h
+
+Mqtt connection
+
+optional arguments:
+  -h, --help     show this help message and exit
+  --topic TOPIC  Topic for message
+
+### Example for publish
 This example publish the message "ON", in the topic "light", using the broker "broker.emqx.io" by default. 
 
 ```
@@ -39,4 +47,10 @@ If you don't use the options, the script send a message and topic by deafult. Th
 python send_data.py
 ```
 
+### Example for subscribe
+This example show how to subscribe in the topic "light"
+
+```
+python receive_data.py --topic light
+```
 
