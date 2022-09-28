@@ -28,11 +28,13 @@ optional arguments:
 
 For __subscribe__, execute: python receive_data.py -h
 
+```
 Mqtt connection
 
 optional arguments:
   -h, --help     show this help message and exit
   --topic TOPIC  Topic for message
+```
 
 ### Example for publish
 This example publish the message "ON", in the topic "light", using the broker "broker.emqx.io" by default. 
