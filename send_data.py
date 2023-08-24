@@ -1,14 +1,15 @@
-#***************************************************************
-#This code publish a message using Paho
-#Source:https://www.emqx.com/en/blog/how-to-use-mqtt-in-python
+# ***************************************************************
+# This code publish a message using Paho
+# Source:https://www.emqx.com/en/blog/how-to-use-mqtt-in-python
 
-#Author: Federico G. D'Angiolo
-#***************************************************************
+# Author: Federico G. D'Angiolo
+# ***************************************************************
 
-from paho.mqtt import client as mqtt_client
 import argparse
 import random
 import time
+
+from paho.mqtt import client as mqtt_client
 
 
 def run(client_id, topic, msg):
@@ -22,7 +23,7 @@ def run(client_id, topic, msg):
     client_id: client_id defined
     topic: topic for publish
     msg: message to sending
-    
+
     Return: nothing
     """
 
@@ -34,7 +35,7 @@ def connect_mqtt(client_id):
     """
     Connect the client to the broker, using the port.
 
-    Arguments: 
+    Arguments:
     client_id: id for the client
     """
     broker = "broker.emqx.io"
@@ -45,6 +46,7 @@ def connect_mqtt(client_id):
     client.connect(broker, port)
     return client
 
+
 def on_connect(rc):
     """
     Verify for possible errors
@@ -53,6 +55,7 @@ def on_connect(rc):
         print("Connected to MQTT Broker!")
     else:
         print("Failed to connect, return code %d\n", rc)
+
 
 def publish(client, topic, msg):
     """
@@ -63,7 +66,7 @@ def publish(client, topic, msg):
     topic: topic for MQTT message.
     msg: message for send.
     """
-    
+
     while True:
         time.sleep(1)
         result = client.publish(topic, msg)
@@ -75,19 +78,18 @@ def publish(client, topic, msg):
             print(f"Failed to send message to topic {topic}")
 
 
-#For CLI
+# For CLI
 
-#Data processing
-parser = argparse.ArgumentParser(description='Mqtt connection')
-parser.add_argument('--topic', type=str, default = "send_msg", help='Topic for message')
-parser.add_argument('--msg', type=str, default = "hello world", help='Message sending')
+# Data processing
+parser = argparse.ArgumentParser(description="Mqtt connection")
+parser.add_argument("--topic", type=str, default="send_msg", help="Topic for message")
+parser.add_argument("--msg", type=str, default="hello world", help="Message sending")
 
 args = parser.parse_args()
 
-if __name__ == '__main__':
-
+if __name__ == "__main__":
     # generate client ID with pub prefix randomly
-    client_id = f'python-mqtt-{random.randint(0, 1000)}'
+    client_id = f"python-mqtt-{random.randint(0, 1000)}"
 
-    #Run ths script
+    # Run ths script
     run(client_id, args.topic, args.msg)

@@ -1,11 +1,12 @@
-#***************************************************************
-#This code publish a message using Paho
-#Source:https://www.emqx.com/en/blog/how-to-use-mqtt-in-python
-#Documentation: https://www.eclipse.org/paho/index.php?page=clients/python/docs/index.php
-#***************************************************************
-import time
+# ***************************************************************
+# This code publish a message using Paho
+# Source:https://www.emqx.com/en/blog/how-to-use-mqtt-in-python
+# Documentation: https://www.eclipse.org/paho/index.php?page=clients/python/docs/index.php
+# ***************************************************************
 import argparse
 import random
+import time
+
 from paho.mqtt import client as mqtt_client
 
 
@@ -18,10 +19,10 @@ def run(client_id, topic):
 
     Arguments:
     client_id: client_id defined
-    broker: defined by the user. Default: broker.emqx.io 
+    broker: defined by the user. Default: broker.emqx.io
     port: defined by th user. Default: 1883
     topic: topic for subscribe
-    
+
     Return: nothing
     """
 
@@ -37,7 +38,7 @@ def connect_mqtt(client_id, broker, port):
     """
     Connect the client to the broker, using the port.
 
-    Arguments: 
+    Arguments:
     client_id: id for the client
     broker: broker for send the message
     port: port refered to the broker
@@ -47,10 +48,11 @@ def connect_mqtt(client_id, broker, port):
     client.connect(broker, port)
     return client
 
+
 def subscribe(client, topic):
     """
     Subscribe to a topic for listen a message. Use the on_message function for callback function
-    
+
     Arguments:
     client: client mqtt
     topic: topic where subscribe
@@ -66,18 +68,17 @@ def on_message(client, userdata, msg):
     print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
 
 
-#For CLI
+# For CLI
 
-#Data processing
-parser = argparse.ArgumentParser(description='Mqtt connection')
-parser.add_argument('--topic', type=str, default = "recive_msg", help='Topic for message')
+# Data processing
+parser = argparse.ArgumentParser(description="Mqtt connection")
+parser.add_argument("--topic", type=str, default="recive_msg", help="Topic for message")
 
 args = parser.parse_args()
 
-if __name__ == '__main__':
-
+if __name__ == "__main__":
     # generate client ID with pub prefix randomly
-    client_id = f'python-mqtt-{random.randint(0, 1000)}'
+    client_id = f"python-mqtt-{random.randint(0, 1000)}"
 
-    #Run ths script
+    # Run ths script
     run(client_id, args.topic)
